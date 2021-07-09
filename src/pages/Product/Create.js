@@ -70,7 +70,6 @@ function Create() {
                 <button onClick={handleSubmit} className="btn btn-primary mt-4">Submit</button>
                 <button onClick={() => history.push('/product')} className="btn btn-success mt-4 mr-2">Back</button>
             </form>
-
         </div>
     )
 }

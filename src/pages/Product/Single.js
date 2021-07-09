@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 
 function Single() {
-    // const history = useHistory()
+    const history = useHistory()
     const { productId } = useParams();
     const [product, setProduct] = React.useState({
         name: '',
@@ -27,6 +27,19 @@ function Single() {
             })
     }, [productId])
 
+    const handleDelete = async (id) => {
+        if (window.confirm('Yakin mau dihapus?')) {
+            try {
+                const response = await axios.delete('http://localhost:5000/product/' + id)
+                const { message } = response.data
+                alert(message)
+                history.push('/product')
+            } catch (error) {
+                alert('Network Error')
+            }
+        }
+    }
+
     return (
         <div>
             <h2 className="mb-4">Halaman Single Product</h2>
@@ -43,6 +56,12 @@ function Single() {
                     <td>Status</td>
                     <td>
                         {product.status ? 'On' : 'Off'}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button onClick={() => handleDelete(product._id)} className="btn btn-danger">Delete</button>
+                        <button onClick={() => history.push('/product')} className="btn btn-success">&laquo; Back</button>
                     </td>
                 </tr>
             </table>
